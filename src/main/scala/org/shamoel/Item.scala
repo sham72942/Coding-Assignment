@@ -4,10 +4,12 @@ sealed trait Item {
   def price: Double
 }
 
-case class Apple() extends Item {
+object Apple extends Item {
   override def price: Double = 60
+  override implicit def toString: String = "Apple"
 }
 
-case class Orange() extends Item {
+object Orange extends Item {
   override def price: Double = 25
+  override implicit def toString: String = "Orange"
 }

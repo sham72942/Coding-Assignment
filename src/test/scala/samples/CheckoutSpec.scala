@@ -7,11 +7,14 @@ import org.shamoel.{Apple, Checkout, Item, Orange}
 class CheckoutSpec extends FunSpec {
   val checkout: Checkout = new Checkout()
 
+  def precision(value: Double, precision: Int): Double =
+    BigDecimal(value).setScale(precision, BigDecimal.RoundingMode.HALF_UP).toDouble
+
   describe("totalCost") {
     it("should return correct item cost") {
-      val items: List[Item] = List[Item](Apple(), Apple(), Orange(), Apple())
-      val pence = 60*3 + 25*1
-      checkout.totalCost(items) shouldBe pence.toDouble
+      val items: List[Item] = List[Item](Apple, Apple, Orange, Apple)
+      val pence = 60*3*.5 + 25*2.0/3
+      precision(checkout.totalCost(items),2) shouldBe precision(pence, 2)
     }
   }
 
